@@ -248,6 +248,25 @@ class Person extends \Faker\Provider\Person
     );
 
     /**
+     * @param string|null $gender 'male', 'female' or null for any
+     * @example 'Adamczyk'
+     */
+    public function lastName($gender = null)
+    {
+        if ($gender === static::GENDER_MALE) {
+            return static::lastNameMale();
+        } elseif ($gender === static::GENDER_FEMALE) {
+            return static::lastNameFemale();
+        }
+
+        return $this->generator->parse(
+            static::randomElement(
+                array_merge(static::$lastNameFemale, static::$lastNameMale)
+            )
+        );
+    }
+
+    /**
      * Return male last name
      * @return string
      * @example 'Vasiliauskas'
